@@ -36,14 +36,14 @@ function printplayer(player,str2,bl)//輸出排序函式  str2則為腳色名稱
     if (bl==1){a=4;b=13;}//用a,b變數做絕對值相反 實現反向排序
     for (i=0;i<5;i++){
         for(j=0;j<14;j++){
-            if(player[Math.abs(i-a)][//用(j-b)]==1){
-               str = str + ","+shot[Math.abs(i-a)]+(Math.abs(j-b)+1)//用Math.abs製作絕對值
+            if(player[Math.abs(i-a)][Math.abs(j-b)]==1){
+               str = str + ","+shot[Math.abs(i-a)]+(Math.abs(j-b)+1)//用Math.abs做絕對值
             }
         }
     }
     console.log(str2+str.slice(1,str.length));
 }
-printplayer(player1,"player1:",1);
-printplayer(player2,"player2:",1);
-printplayer(player3,"player3:",1);
-printplayer(player4,"player4:",1);
+printplayer(player1,"player1:",0);
+printplayer(player2,"player2:",0);
+printplayer(player3,"player3:",0);
+printplayer(player4,"player4:",0);
