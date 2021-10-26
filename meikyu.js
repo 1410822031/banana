@@ -38,27 +38,30 @@ function randommap(x,y){//隨機地圖目標x y軸 且不指向自己 (如1.1目
 function rnd(x){return Math.floor(Math.random()*x);}//隨機整數函式
 randommap(x,y);//隨機化地圖
 function consolemap(x,y,c){//輸出文字地圖 函式(c可用0.1)0.輸出目前地圖 1.輸出每個點的步數
-    //假如前面選擇 5*5地圖
-    //0.x.y: 3.2 , 1.2 , 3.0 , 1.1 , 0.2    |1.x.y: 4 , 7 , 3 , 2 , 7
-    //  x.y: 1.1 , 3.0 , 4.3 , 1.0 , 1.4    |  x.y: 3 , 2 , 6 , 8 , 6
-    //  x.y: 1.4 , 2.2 , 2.3 , 1.1 , 0.2    |  x.y: 6 , 6 , 5 , 3 , 7
-    //  x.y: 4.2 , 0.0 , 3.2 , 0.0 , 0.0    |  x.y: 8 , 5 , 4 , 5 , 5
-    //  x.y: 2.1 , 2.3 , 0.2 , 2.4 , 3.2    |  x.y: 7 , 5 , 7 , 8 , 4
+    /*假如前面選擇 5*5地圖
+    0.                                          1.
+    x,y: 4, 1 _  1, 2 _  3, 3 _  1, 2 _  0, 2      |   x,y: 5 _  4 _  2 _  5 _  4
+    x,y: 2, 0 _  0, 3 _  0, 0 _  1, 0 _  1, 1      |   x,y: 3 _  5 _  5 _  4 _  5
+    x,y: 3, 3 _  4, 3 _  0, 0 _  0, 3 _  4, 1      |   x,y: 3 _  4 _  6 _  6 _  6
+    x,y: 2, 1 _  3, 1 _  1, 3 _  2, 0 _  3, 1      |   x,y: 5 _  5 _  6 _  2 _  4
+    x,y: 4, 1 _  4, 3 _  0, 3 _  2, 4 _  1, 1      |   x,y: 6 _  5 _  6 _  7 _  6
+    */
     for(j=0;j<y;j++)
     {
         let str="";
         for(i=0;i<x;i++)
         {
             if(c==0){
-                str+=" , "+map[j][i].gox+"."+map[j][i].goy;
+                str+=" _ "+naraberu(map[j][i].gox)+","+naraberu(map[j][i].goy);
             }
             else if(c==1){
-                str+=" , "+map[j][i].aruku;
+                str+=" _ "+naraberu(map[j][i].aruku);
             }
         }
-        console.log("x.y: "+str.slice(3,str.length))
+        console.log("x,y: "+str.slice(3,str.length))
     }
 }
+function naraberu(num){return num>9?num:" "+num}
 consolemap(x,y,0);//使用0號地圖
 var kurukey=false;//判斷是否還在圓
 var kurutree=kinone;//宣告全域變數kurutree 
@@ -72,7 +75,6 @@ function treearuku(betunotree){//計算步數函式
     let x=betunotree.gox,y=betunotree.goy;
     betunotree.aruku=1;//用1當走過點標記 後面會變成最終步數
     if (map[y][x].aruku==0){//往下延伸點 
-        console.log(map[y][x].gox+"."+map[y][x].goy+":"+betunotree.aruku)
         treearuku(map[y][x]);
     }
     else if(map[y][x].aruku==1){//確認碰到圓圈頭尾相碰
@@ -82,14 +84,12 @@ function treearuku(betunotree){//計算步數函式
     }
     if (kurukey){
         betunotree.aruku=map[y][x].aruku+1;//圈數回推
-        console.log(map[y][x].gox+"."+map[y][x].goy+":"+betunotree.aruku)
         if(betunotree==kurutree){
         kurukuru(map[y][x],betunotree.aruku);
         }
     }
     else{
         betunotree.aruku=map[y][x].aruku+1;//節點碰到圓或其他節點直接加 退出寒士
-        console.log(map[y][x].gox+"."+map[y][x].goy+":"+betunotree.aruku)
         return 0;
     }
 }
