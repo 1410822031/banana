@@ -45,14 +45,14 @@ Life.prototype.getStatusAt = function(row, col){
 }*/
 Life.prototype.update = function(){
     var nextGrid = JSON.parse(JSON.stringify(this.grid));
-    for (let r = 0; r < this.row; r++) {
-        for (let c = 0; c < this.col; c++) {
+    for (let r = 1; r < this.row-1; r++) {
+        for (let c = 1; c < this.col-1; c++) {
             var nCount = this.getStatusAt(r,c);
             if (nCount==LIVE)//若有細胞才做外加
                 {
                     nextGrid[r][c]-=1;//基本數減1
                     nextGrid[r-1][c-1]+=1;
-                    nextGrid[r-1][c]+=1;
+                    nextGrid[r-1][c]+=1;//我想寫額外邊框所以直接for先減1 如果使用者 的邊框輸入10 this.row+2
                     nextGrid[r-1][c+1]+=1;
                     nextGrid[r][c-1]+=1;
                     nextGrid[r][c+1]+=1;
@@ -76,7 +76,7 @@ Life.prototype.update = function(){
 
 }
 
-var game = new Life(100,100);
+var game = new Life(100,100);//對我的城市來說是 98*98
 console.log(JSON.stringify(game))
 game.Initialize();
 game.update();
